@@ -1,0 +1,85 @@
+#This project was created by Noga Friedman and Itay Avidar#
+
+Description:
+Our code is seperated into a bunch of functions, some responsible for making auditory
+changes to the wav files/tunes, and some are shorter and exist mainly for aesthetic 
+reasons in order to make the code cleaner and more readable.
+
+~ Shorter/user-interaction functions:
+Those are smaller functions that are responsible mainly for user interface, printing
+messages to the user, getting input and checking for it's validity, before transfering
+it to the more "functional" functions.
+We decided to create those functions in order to make the code more organized, and make
+sure no invalid input actually gets inside the main functions of the program.
+
+* print_main_menu: This short function is responsible for printing the main
+menu of the program, thus showing the user their options (edit file/compose new tune/
+exit the program).
+
+* print_edit_menu: Similarly to the previous function, this one is responsible
+for printing the 8 options the user can pick from when editing an existing wav file.
+
+* get_composition_file: Asks the user for the file of the instructions of the tune
+they want to compose using the program. This function checks if the input is valid, and
+only if it is, it returns the file to the main composing function compose_tune.
+
+* save_file: Asks the user for a name for the file they created to be saved as, and
+calls the wave.helper function to do the saving. Also checks if the saving was successful.
+
+~ Base functions:
+Those are the "main" parts of the program as described in the instructions, and they serve
+as a 'base' for the other "functional" functions to be called in and do the work. They
+branch out into smaller sections, each dealing with a case according to the user's choice.
+
+* main_menu: This is the main function of the program. It calls the printing functions 
+and directs the code to the appropriate function according to the user's input.
+it starts by printing the main menu for the user to read (by calling the first function),
+then asks the user for input of whether they'd like to edit an existing file, compose
+a new one, or exit. if the user picked the option to edit a file, this function calls the
+next base function - 'edit_wav'. 
+if the user picked the option to compose a new tune, this function calls the compose_tune
+function, which is the third base function of the program.
+If the input the user gave was invalid, the function prints a matching message and asks
+for another input.
+
+* edit_wav: This function is the main function that is responsible for handling the 
+editing of a wav file. It branches out, calling different functions according to the user's
+choice of an editing option: First, it calls the second function (print_edit_menu) in
+order to show the user what they can pick from (reverse, inverse, speed, tempo, etc).
+Then, it calls a function that gets an input from the user (and checks if it's valid),
+receives the valid input and calls the matching function that makes that change to the tune.
+List of sub-functions this function calls, that make the changes to the tune: reverser,
+inverse, ind_speed, dec_speed, inc_volume, dec_volume, low_pass_filter.
+
+* compose_tune: This is the third and last "base" function of the program, and it deals
+with the tune composing part. It calls the get_composition_file function in order to get
+a file name from the user to work with, then transfers this file name into the function
+instructions_breaker, that translates the list into the requested format. Then the result
+is transfered into the function sound_interpreter that converts it to the new edited audio
+list by using a sub-function named note_breaker that deals with the math. The final result 
+is returned to the compose_tune function, which then calls the edit_wav function to let the
+user make changes on the composed tune using the previous part of the program.
+
+~ Helper functions:
+Those functions are "smaller" functions that are called inside the base functions.
+They do the functional part of the program, like calculate the math of things and make
+changes to data objects.
+
+* calc_average: Receives a list of lists and calculates the average of each column.
+We added this function because the code had a few parts that required us to calculate
+the average of something, and to reduce repetition and avoid writing a similar code a
+few times over, we decided to just make this function and call it in all the places
+that required it.
+
+* instructions_breaker: Gets the file the user wants to compose and translates it to the
+correct format that our program uses. It removes spaces, black lines, etc, and returns a list
+that our program can work with. Putting this work seperately in this sub-function keeps the
+code clean, because each function deals with a specific task.
+
+* sound_interpreter: This function gets the corrected format from the previous function, and
+calls the note_breaker function in order to convert it to the data needed for audio making.
+Then it organizes the new data in a final list that it sends back to compose_tune.
+
+* note_breaker: This function does the complex math calculation needed in order to make the
+audio- It converts the notes accordingly and returns the altered audio list to sound_interpreter.
+

@@ -1,13 +1,3 @@
-#######################################
-# FILE : wave_editor
-# WRITER : Noga_Friedman , nogafri
-#          Itay_Avidar , itay.avidar
-# Exercise: ex6
-# DESCRIPTION: a program that alters wav files or creates them
-# STUDENTS I DISCUSSED THE EXERCISE WITH: -
-# WEB PAGES I USED: -
-#######################################
-
 import math
 import os
 import wave_helper
